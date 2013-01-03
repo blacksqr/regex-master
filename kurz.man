@@ -1,0 +1,63 @@
+Kurzhilfe über die allerwichtigsten Zeichen in regulären Ausdrücken
+(keineswegs komplett, denn dafür ist die Originalliteratur da!)
+
+
+.     Passt auf genau ein beliebiges Zeichen
+[ ]   Passt auf genau ein Zeichen von denen, die in der
+      Klammer genannt werden. Ist das erste Zeichen ein
+      ^ so passt genau ein Zeichen, das nicht in der
+      Klammer genannt wird. Es kann auch ein Bereich von
+      Zeichen genannt werden, z. B. passt \texttt{[0-9]}
+      auf genau eine Ziffer, [\^0-9] dagegen auf ein
+      beliebiges Zeichen, das keine Ziffer ist. Ein
+      Minuszeichen muss als erstes oder letztes Zeichen
+      genannt sein, damit es nicht als bis-Strich
+      interpretiert wird.
+      Eine schließende eckige Klammer muss, wenn auch sie
+      erlaubt sein soll, an erster Stelle genannt
+      werden, z. B. passt []:?\$/] auf eines  dieser Zeichen
+           ] : ? \$ /
+      Die genannten Sonderzeichen verlieren innerhalb der
+      eckigen Klammern ihre Bedeutung und stehen für sich selbst.
+
+
+*     Ein * hinter einem Atom dient als Wiederholungsfaktor
+      "beliebig oft", d. h. 0 Mal oder öfter. * steht also
+      immer hinter einem nicht teilbaren (atomaren) regulären
+      Ausdruck und passt gemeinsam mit diesem auf nichts,
+      auf den regulären Ausdruck oder auf ein beliebig
+      häufiges Vorkommen des regulären Ausdrucks hintereinander.
+      Z. B. ab*c passt auf ein \texttta, gefolgt von 0 oder
+      mehr b, gefolgt von einem c. oder M.* passt auf alles,
+      was mit M anfängt, oder hallo(du|Sie)*da passt auf hallo, 
+      gefolgt von null oder mehr du oder Sie, gefolgt von einem
+      da. Ein * am Anfang ist also immer falsch!
++     Ähnlich *, passt auf 1 oder mehr Zeichen, die auf
+      das davor stehende Atom passen. (Hinweis: geht bei
+      grep nur mit der Option -E)
+?     Ähnlich + und *, passt auf 0 oder 1 Zeichen, die
+      auf das davor stehende Atom passen.  (Hinweis: geht bei
+      grep nur mit der Option -E)
+{ }   Innerhalb von geschweiften Klammen können weitere
+      Wiederholungsfaktoren angegeben werden. Dort kann enthalten
+      sein:
+        1 Zahl, z.B. {3} - gibt an, dass das davor stehende Atom
+        genau so oft erwartet wird.
+        1 Zahl und ein Komma, z.B. {3,} -- gibt an, dass das davor
+        stehende Atom mindestens so oft erwartet wird.
+        2 Zahlen mit einem Komma dazwischen, z. B. {2,4} -- gibt an,
+        dass das davor stehende Atom (in diesem Beispiel) mindestens
+        2-mal, höchstens 4-mal erwartet wird. Ggf. kann man links
+        auch 0 oder 1 angeben. Weglassen darf man die linke Zahl
+        aber nicht.
+
+(ab|xy) Passt auf alles, was auf ab oder auf xy passt. Runde
+      Klammern machen aus einem längeren regulären Ausdruck ein
+      Atom, d. h. ein dahinter stehender Wiederholungsfaktor bezieht
+      sich auf den kompletten geklammerten Ausdruck.
+^     (am Anfang) steht für einen Zeilenanfang.
+$     (am Ende) steht für ein Zeilenende.
+\     quotet das folgende Zeichen, d. h. das folgende Zeichen
+      verliert seine Sonderbedeutung. \* passt also auf ein
+      Sternchen, \. auf einen Punkt usw.
+
